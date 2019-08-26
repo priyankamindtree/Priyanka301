@@ -1,31 +1,11 @@
-pipeline {
-
+node { 
     def mvnHome 
-    def server =Artifactory.server 'artifactory'
-
-    stages{
-     stage('git checkout') { 
-      steps{
+    def server = Artifactory.server 'jforgartifactory' 
+    stage('Preparation') { // for display purposes 
+       // Get some code from a GitHub repository 
        git 'https://github.com/priyankamindtree/Priyanka301.git' 
-       mvnHome = tool 'MAVEN' 
+       // Get the Maven tool. 
+       // ** NOTE: This 'M3' Maven tool must be configured 
+       // **       in the global configuration.            
+       mvnHome = tool 'M3' 
     }
-     }
-    
-        
-     stage('Quality Analysis') { 
-         withSonarQubeEnv('sonarqube') { 
-         sh 'mvn clean package sonar:sonar' 
-         } 
-     } 
-      
-     stage("Quality Gate"){ 
-         timeout(time: 1, unit: 'HOURS') {  
-             def qg = waitForQualityGate()  
-             if (qg.status != 'OK') { 
-                 currentBuild.status='FAILURE' 
-                 error "Pipeline aborted due to quality gate failure: ${qg.status}" 
-             } 
-         } 
-     }
-     }
-}

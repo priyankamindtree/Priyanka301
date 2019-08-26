@@ -9,4 +9,28 @@ node {
        // **       in the global configuration.            
        mvnHome = tool 'M3' 
     }
-}
+    stage('Sonar Quality Analysis'){ 
+ 	Run the sonar scan 
+ 	withSonarQubeEnv('sonarqube'){ 
+ 	sh 'mvn clean package sonar:sonar' 
+ 	} 
+    } 
+    stage('Sonar Quality Gate') { 
+ 	timeout(time: 2, unit: 'MINUTES') { 
+ 	def qg = waitForQualityGate() 
+ 	if (qg.status != 'OK') { 
+ 		currentBuild.status='FAILURE' 
+ 		error "Pipeline aborted due to quality gate failure: ${qg.status}" 
+ 		} 
+ 	} 
+    } 
+    stage('Build') { 
+        Run the maven build 
+       withEnv(["MVN_HOME=$mvnHome"]) { 
+          if (isUnix()) { 
+             sh '"$MVN_HOME/bin/mvn" -Dmaven.test.failure.ignore clean package' 
+          } else { 
+             bat(/"%MVN_HOME%\bin\mvn" -Dmaven.test.failure.ignore clean package/) 
+          } 
+       } 
+    } 

@@ -12,7 +12,7 @@ node {
     stage('Sonar Quality Analysis'){ 
  	//Run the sonar scan 
  	withSonarQubeEnv('SonarQube'){ 
- 	sh 'mvn clean package sonar:sonar' 
+ 	sh '"$MVN_HOME/bin/mvn" clean package sonar:sonar' 
  	} 
     } 
     stage('Sonar Quality Gate') { 

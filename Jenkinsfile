@@ -1,6 +1,6 @@
 node { 
     def mvnHome 
-    def server = Artifactory.server 'jforgartifactory' 
+    def server = Artifactory.server 'artifactory' 
     stage('Preparation') { // for display purposes 
        // Get some code from a GitHub repository 
        git 'https://github.com/priyankamindtree/Priyanka301.git' 
@@ -11,7 +11,7 @@ node {
     }
     stage('Sonar Quality Analysis'){ 
  	Run the sonar scan 
- 	withSonarQubeEnv('sonarqube'){ 
+ 	withSonarQubeEnv('SonarQube'){ 
  	sh 'mvn clean package sonar:sonar' 
  	} 
     } 
@@ -33,4 +33,5 @@ node {
              bat(/"%MVN_HOME%\bin\mvn" -Dmaven.test.failure.ignore clean package/) 
           } 
        } 
-    } 
+    }
+}

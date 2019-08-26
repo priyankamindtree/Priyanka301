@@ -34,4 +34,11 @@ node {
           } 
        } 
     }
+    stage('Jfrog Artifactory Upload'){ 
+    def uploadSpec = """  
+    {   
+ 	"files": [ { "pattern": "/var/lib/jenkins/workspace/sample/target/*.war", "target": "example-repo-local" } ]   
+     }"""   
+    server.upload(uploadSpec)  
+    }
 }

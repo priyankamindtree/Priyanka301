@@ -10,7 +10,7 @@ pipeline {
        mvnHome = tool 'MAVEN' 
     }
      }
-    }
+    
         
      stage('Quality Analysis') { 
          withSonarQubeEnv('sonarqube') { 
@@ -28,3 +28,4 @@ pipeline {
          } 
      }
      }
+}

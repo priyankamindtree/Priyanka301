@@ -10,7 +10,7 @@ node {
        mvnHome = tool 'M3' 
     }
     stage('Sonar Quality Analysis'){ 
- 	Run the sonar scan 
+ 	//Run the sonar scan 
  	withSonarQubeEnv('SonarQube'){ 
  	sh 'mvn clean package sonar:sonar' 
  	} 

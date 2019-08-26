@@ -8,7 +8,10 @@ pipeline {
       steps{
        git 'https://github.com/priyankamindtree/Priyanka301.git' 
        mvnHome = tool 'MAVEN' 
-    } 
+    }
+     }
+    }
+        
      stage('Quality Analysis') { 
          withSonarQubeEnv('sonarqube') { 
          sh 'mvn clean package sonar:sonar' 
@@ -23,4 +26,5 @@ pipeline {
                  error "Pipeline aborted due to quality gate failure: ${qg.status}" 
              } 
          } 
-     } 
+     }
+     }

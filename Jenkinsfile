@@ -48,6 +48,6 @@ node {
 	   }
         
         stage("Docker-compose"){
-                sh "docker-compose up -d --build"
+                sh "sudo docker-compose up -d --build"
         }
 }

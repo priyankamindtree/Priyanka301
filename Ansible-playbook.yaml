@@ -1,0 +1,12 @@
+hosts: server1
+  sudo: yes
+
+  tasks:
+    - name: Pull docker image
+      shell: docker pull priyanka301/springpetclinic
+
+    - name: Stop docker container
+      shell: docker rm -f springpetclinic
+
+    - name: Run docker container
+      shell: docker run -itd -p 8081:8080 --name petclinic sandeepds2002/springpetclinic

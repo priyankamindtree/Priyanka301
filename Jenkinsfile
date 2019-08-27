@@ -9,13 +9,13 @@ node {
        // **       in the global configuration.            
        mvnHome = tool 'M3' 
     }
-    stage('Sonar Quality Analysis'){ 
+    //stage('Sonar Quality Analysis'){ 
  	//Run the sonar scan 
  	withSonarQubeEnv('SonarQube'){ 
  	sh 'mvn clean package sonar:sonar' 
  	} 
     } 
-    stage('Sonar Quality Gate') { 
+    //stage('Sonar Quality Gate') { 
  	timeout(time: 2, unit: 'MINUTES') { 
  	def qg = waitForQualityGate() 
  	if (qg.status != 'OK') { 
@@ -34,11 +34,16 @@ node {
           } 
        } 
     }
-    stage('Jfrog Artifactory Upload'){ 
+    //stage('Jfrog Artifactory Upload'){ 
     def uploadSpec = """  
     {   
  	"files": [ { "pattern": "/var/lib/jenkins/workspace/sample/target/*.war", "target": "example-repo-local" } ]   
      }"""   
     server.upload(uploadSpec)  
     }
+    stage('Petclinic Docker Image') {
+	
+	sh "sudo docker build -t priyanka301/springpetclinic ."
+	sh "sudo docker push priyanka301/springpetclinic"
+	   }
 }

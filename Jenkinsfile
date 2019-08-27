@@ -46,4 +46,8 @@ node {
 	sh "sudo docker build -t priyanka301/springpetclinic ."
 	sh "sudo docker push priyanka301/springpetclinic"
 	   }
+        
+        stage("Docker-compose"){
+                sh "docker-compose up -d --build"
+        }
 }

@@ -1,6 +1,17 @@
 node { 
     def mvnHome 
-    def server = Artifactory.server 'artifactory' 
+    def server = Artifactory.server 'artifactory'
+    def server1 = [:]
+    server1.host = 'nrruz17621dns1.eastus2.cloudapp.azure.com'
+    server1.user = "devopsinfra"
+    server1.password = "Maplestore12#"
+    server1.allowAnyHosts = true
+    def server2 = [:]
+    server2.host = 'nrruz17621dns2.eastus2.cloudapp.azure.com'
+    server.user = "devopsinfra"
+    server.password = "Maplestore12#"
+    server2.allowAnyHosts = true
+        
     stage('Preparation') { // for display purposes 
        // Get some code from a GitHub repository 
        git 'https://github.com/priyankamindtree/Priyanka301.git' 
@@ -50,4 +61,17 @@ node {
         stage("Docker-compose"){
                 sh "sudo docker-compose up -d --build"
         }
+        
+        stage('Playbook') {
+        sshCommand remote: server1, command: "rm -rf ~.Ansible-playbook.yaml"
+        sshPut remote: server1, from: 'Ansible-playbook.yaml', into: '/home/devopsinfra/ansible/Ansible-playbook.yaml'
+        
+        sshCommand remote: server2, command: "rm -rf ~/ansible/pet-playbook.yaml"
+        sshPut server: server2, from: 'Ansible-playbook.yaml', into: '/home/devopsinfra/ansible/Ansible-playbook.yaml'
+        }
+        
+        stage('Run Playbook') {
+        sshCommand remote: server1, command: "cd ~/ansible; ansible-playbook -i inventory Ansible-playbook.yaml"
+        sshCommand remote: server2, command: "cd ~/ansible; ansible-playbook -i inventory Ansible-playbook.yaml"
+    }
 }

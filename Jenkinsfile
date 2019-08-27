@@ -1,4 +1,5 @@
-node { 
+node 
+{ 
     def mvnHome 
     def server = Artifactory.server 'artifactory'
     def server1 = [:]
@@ -8,8 +9,8 @@ node {
     server1.allowAnyHosts = true
     def server2 = [:]
     server2.host = 'nrruz17621dns2.eastus2.cloudapp.azure.com'
-    server.user = "devopsinfra"
-    server.password = "Maplestore12#"
+    server2.user = "devopsinfra"
+    server2.password = "Maplestore12#"
     server2.allowAnyHosts = true
         
     stage('Preparation') { // for display purposes 

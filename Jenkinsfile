@@ -59,20 +59,20 @@ node
 	sh "sudo docker push priyanka301/springpetclinic"
 	   }
         
-        stage("Docker-compose"){
+        stage("Deployment"){
                 sh "sudo docker-compose up -d --build"
         }
         
-        stage('Playbook') {
-        sshCommand remote: server1, command: "rm -rf ~.Ansible-playbook.yaml"
-        sshPut remote: server1, from: 'Ansible-playbook.yaml', into: '/home/devopsinfra/ansible/Ansible-playbook.yaml'
+        //stage('Playbook') {
+        //sshCommand remote: server1, command: "rm -rf ~.Ansible-playbook.yaml"
+        //sshPut remote: server1, from: 'Ansible-playbook.yaml', into: '/home/devopsinfra/ansible/Ansible-playbook.yaml'
         
-        sshCommand remote: server2, command: "rm -rf ~/ansible/pet-playbook.yaml"
-        sshPut server: server2, from: 'Ansible-playbook.yaml', into: '/home/devopsinfra/ansible/Ansible-playbook.yaml'
-        }
+        //sshCommand remote: server2, command: "rm -rf ~/ansible/pet-playbook.yaml"
+        //sshPut server: server2, from: 'Ansible-playbook.yaml', into: '/home/devopsinfra/ansible/Ansible-playbook.yaml'
+        //}
         
-        stage('Run Playbook') {
-        sshCommand remote: server1, command: "cd ~/ansible; ansible-playbook -i inventory Ansible-playbook.yaml"
-        sshCommand remote: server2, command: "cd ~/ansible; ansible-playbook -i inventory Ansible-playbook.yaml"
-    }
+        //stage('Run Playbook') {
+        //sshCommand remote: server1, command: "cd ~/ansible; ansible-playbook -i inventory Ansible-playbook.yaml"
+        //sshCommand remote: server2, command: "cd ~/ansible; ansible-playbook -i inventory Ansible-playbook.yaml"
+    //}
 }

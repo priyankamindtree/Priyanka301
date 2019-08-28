@@ -13,7 +13,7 @@ node
     //server2.password = "Maplestore12#"
     //server2.allowAnyHosts = true
         
-    stage('Preparation') { // for display purposes 
+    stage('Gitcheckout') { // for display purposes 
        // Get some code from a GitHub repository 
        git 'https://github.com/priyankamindtree/Priyanka301.git' 
        // Get the Maven tool. 

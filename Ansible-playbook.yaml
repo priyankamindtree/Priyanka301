@@ -1,19 +1,12 @@
-- hosts: client 
-  become: yes 
- 
- 
-  tasks:
-  
-     - name: Add Docker GPG key 
-       apt_key: url=https://download.docker.com/linux/ubuntu/gpg 
- 
- 
-     - name: Add Docker APT repository 
-	   apt_repository: 
-        repo: deb [arch=amd64] https://download.docker.com/linux/{{ansible_distribution|lower}} {{ansible_distribution_release}} stable 
+hosts: server1
+  sudo: yes
 
- 
-    - name : install docker 
-      apt: 
-        name: docker-ce 
-        state: present
+  tasks:
+    - name: Pull docker image
+      shell: docker pull priyanka301/springpetclinic
+
+    - name: Stop docker container
+      shell: docker rm -f petclinic
+
+    - name: Run docker container
+      shell: docker run -itd -p 9000:8080 --name petclinic priyanka301/springpetclinic

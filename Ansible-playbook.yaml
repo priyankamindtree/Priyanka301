@@ -1,4 +1,4 @@
-hosts: server1
+hosts: all
   sudo: yes
 
   tasks:

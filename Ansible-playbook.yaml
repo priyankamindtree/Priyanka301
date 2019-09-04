@@ -1,5 +1,5 @@
 hosts: all
-  sudo: yes
+sudo: yes
 
   tasks:
     - name: Pull docker image

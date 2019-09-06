@@ -59,8 +59,12 @@ node
 	sh "sudo docker push priyanka301/springpetclinic"
 	   }
         
-        stage("Deployment"){
-                sh "sudo docker-compose up -d --build"
+     stage("Deployment"){
+         sh "sudo docker-compose up -d --build"
+        }
+        
+      stage("Run Playbook"){
+         sh "ansible-playbook Ansible-playbook.yaml"
         }
         
      catch(err){ 

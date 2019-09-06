@@ -63,10 +63,10 @@ node
                 sh "sudo docker-compose up -d --build"
         }
         
-        stage ("run ansible playbook")
+     catch(err){ 
+     stage('MAIL'){ 
+     mail bcc: '', body: 'Build Failed', cc: '', from: '', replyTo: '', subject: 'Build Failed', to: 'meet_priyan@rediff.com'  
+         } 
+       } 
                 
-       
-        
-        
-    }
 }
